@@ -1,12 +1,7 @@
-test-inovus:
+test_inovus:
   hosts:
-    localhost:	{ansible_host: "localhost"}
-    
+    localhost:       {ansible_host: "localhost"}
+  
 vars:
-  ansible_user: "root"
-  ansible_ssh_pass: "Suslik=Net"
-  vm_name: test-inovus
-  vm_cores: 2
-  vm_mem: 4GB
-  vm_boot_disk_size: 30GB
-  vm_image: centos-7
+      ansible_user: "root"
+      ansible_ssh_pass: "Suslik=Net"
