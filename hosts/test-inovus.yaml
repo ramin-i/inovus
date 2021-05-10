@@ -1,7 +1,7 @@
 test_inovus:
   hosts:
-    localhost:       {ansible_host: "localhost", ansible_user: "root", ansible_ssh_pass: "Secret01"}
-    test-inovus:     {ansible_host: "178.154.205.66", ansible_user: "iadmin", ansible_ssh_password: "Secret01"}
+    local-host:       {ansible_host: "localhost", ansible_user: "root", ansible_ssh_pass: "Secret01"}
+    test-inovus:     {ansible_host: "178.154.205.66", ansible_user: "iadmin", ansible_ssh_pass: "Secret01"}
 
   vars:
 ### for yandex
