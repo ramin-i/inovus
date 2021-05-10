@@ -1,0 +1,3 @@
+CREATE ROLE {{ pg_user }} LOGIN;
+CREATE DATABASE {{ pg_database }};
+ALTER DATABASE {{ pg_database }}  OWNER TO {{ pg_user }};

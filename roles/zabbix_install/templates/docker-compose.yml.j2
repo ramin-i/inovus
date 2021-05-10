@@ -1,0 +1,46 @@
+version: '3.1'
+services:
+  postgres-server:
+    image: postgres:latest
+    restart: always
+    network_mode: host
+    environment:
+      POSTGRES_USER: zabbix
+      POSTGRES_PASSWORD: zabbix
+      POSTGRES_DB: zabbix
+      PG_DATA: /var/lib/postgresql/data/pgdata
+
+  zabbix-server:
+    image: zabbix/zabbix-server-pgsql:ubuntu-latest
+    restart: always
+    network_mode: host
+    environment:
+      DB_SERVER_HOST: {{db_server_host}}
+      POSTGRES_USER: zabbix
+      POSTGRES_PASSWORD: zabbix
+      POSTGRES_DB: zabbix
+    depends_on:
+      - postgres-server
+
+  zabbix-web:
+    image: zabbix/zabbix-web-nginx-pgsql:ubuntu-latest
+    restart: always
+    network_mode: host
+    environment:
+      DB_SERVER_HOST: {{db_server_host}}
+      POSTGRES_USER: zabbix
+      POSTGRES_PASSWORD: zabbix
+      POSTGRES_DB: zabbix
+      ZBX_SERVER_HOST: zabbix-server
+      PHP_TZ: "Asia/Novosibirsk"
+    depends_on:
+      - postgres-server
+      - zabbix-server
+
+  zabbix-agent:
+    image: zabbix/zabbix-agent:latest
+    privileged: true
+    restart: always
+    network_mode: host
+    environment:
+      - ZBX_SERVER_HOST={{zabbix_server_host}}

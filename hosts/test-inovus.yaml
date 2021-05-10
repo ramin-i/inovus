@@ -1,4 +1,20 @@
 test_inovus:
   hosts:
     localhost:       {ansible_host: "localhost", ansible_user: "root", ansible_ssh_pass: "Suslik=Net"}
-      
+    test-inovus:     {ansible_host: "178.154.205.66", ansible_user: "iadmin", ansible_ssh_pass: "Secret01"}
+
+  vars:
+### for yandex
+    vm_name: test-inovus
+    vm_cores: 2
+    vm_mem: 4GB
+    vm_boot_disk_size: 30GB
+    vm_image: centos-7
+
+### for postgres_user
+    pg_user: test
+    pg_database: test
+
+### for zabbix_install
+    db_server_host: 127.0.0.1
+    zabbix_server_host: 127.0.0.1

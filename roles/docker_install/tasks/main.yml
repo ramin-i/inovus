@@ -1,0 +1,73 @@
+- name: check if docker install on host
+  shell: /usr/bin/docker version
+  register: docker_exists
+  ignore_errors: yes
+
+- name: check if docker-compose install on host
+  shell: /usr/bin/docker-compose version
+  register: docker_compose_exists
+  ignore_errors: yes
+
+- name: get docker exists status
+  debug:
+    msg: "{{ docker_exists.rc }}"
+  ignore_errors: yes
+
+- debug:
+    msg: "{{ hostvars[inventory_hostname].ansible_distribution }}"
+- debug:
+    msg: "{{ hostvars[inventory_hostname].ansible_distribution_major_version }}"
+- debug:
+    msg: "{{ hostvars[inventory_hostname].ansible_distribution_version }}"
+
+- name: "Add docker repository from file"
+  copy:
+    src: "docker-ce.repo"
+    dest: "/etc/yum.repos.d/docker-ce.repo"
+    force: yes
+    mode: 0644
+
+- name: Install Docker to host
+  package:
+    name: docker-ce
+    state: present
+  when: docker_exists.rc != 0
+
+- name: "download docker-compose"
+  get_url:
+    url: "https://github.com/docker/compose/releases/download/{{docker_compose_version}}/docker-compose-{{docker_compose_type}}"
+    dest: "/usr/bin/docker-compose"
+    mode: 0775
+    force: no
+  when: ((docker_compose_exists.rc != 0) and (RMIS_YUM_PROXY is not defined or RMIS_YUM_PROXY == 'disabled'))
+
+- name: Ensure firewalld is stoped and disabled
+  systemd:
+    name: firewalld
+    state: stopped
+    enabled: no
+
+- name: Check docker config directory exists
+  file:
+    path: "/etc/docker/"
+    state: directory
+    mode: 0755
+
+- name: Set daemon config params
+  copy:
+    src: "daemon.json"
+    dest: /etc/docker/daemon.json
+    mode: 0644
+  register: docker_conf
+
+- name: Ensure Docker is started and enabled at boot.
+  systemd:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: Reload Docker when daemon.json changed
+  systemd:
+    name: docker
+    state: reloaded
+  when: docker_conf.changed

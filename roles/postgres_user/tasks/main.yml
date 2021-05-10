@@ -1,0 +1,8 @@
+- template:
+    src:  create_user.sql.j2
+    dest: /opt/create_user.sql
+    mode: 0644
+
+- name: create postgres user and database
+  shell: psql -U zabbix -f /opt/create_user.sql
+
