@@ -1,7 +1,4 @@
 test_inovus:
   hosts:
-    localhost:       {ansible_host: "localhost"}
-  
-  vars:
-      ansible_user: "root"
-      ansible_ssh_pass: "Suslik=Net"
+    localhost:       {ansible_host: "localhost", ansible_user: "root", ansible_ssh_pass: "Suslik=Net"}
+      
