@@ -1,4 +1,10 @@
 - name: "create vm"
-  shell: 'yc compute instance create \ --name {{ vm_name }} \ --cores {{ vm_cores }} \ --memory {{ vm_mem }} \ --create-boot-disk size={{ vm_boot_disk_size }},image-folder-id=standard-images,image-family={{ vm_image }} \ --ssh-key {{ item}}'
+  shell: |
+    yc compute instance create \ 
+    --name {{ vm_name }} \ 
+    --cores {{ vm_cores }} \ 
+    --memory {{ vm_mem }} \ 
+    --create-boot-disk size={{ vm_boot_disk_size }},image-folder-id=standard-images,image-family={{ vm_image }} \ 
+    --ssh-key {{ item}}
   with_file:
     - id_rsa.pub
