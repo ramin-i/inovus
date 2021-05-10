@@ -1,0 +1,4 @@
+- name: run yandex create vm
+  include_tasks: yandex.yml
+  tags:
+    - create-vm

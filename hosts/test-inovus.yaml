@@ -1,0 +1,10 @@
+testrmis152_rcod:
+  hosts:
+    localhost:	{ansible_host: "localhost"}
+    
+vars:
+  vm_name: test-inovus
+  vm_cores: 2
+  vm_mem: 4GB
+  vm_boot_disk_size: 30GB
+  vm_image: centos-7
