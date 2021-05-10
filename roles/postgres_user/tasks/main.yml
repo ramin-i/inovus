@@ -16,5 +16,5 @@
     mode: 0644
 
 - name: create postgres user and database
-  shell: psql -U {{psql_root}} -f /opt/create_user.sql
+  shell: psql -U {{psql_root}} -h {{db_server_host}} -f /opt/create_user.sql
 
