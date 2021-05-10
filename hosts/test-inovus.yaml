@@ -2,6 +2,6 @@ test_inovus:
   hosts:
     localhost:       {ansible_host: "localhost"}
   
-vars:
+  vars:
       ansible_user: "root"
       ansible_ssh_pass: "Suslik=Net"
