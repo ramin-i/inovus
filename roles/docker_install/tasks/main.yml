@@ -41,12 +41,6 @@
     force: no
   when: ((docker_compose_exists.rc != 0) and (RMIS_YUM_PROXY is not defined or RMIS_YUM_PROXY == 'disabled'))
 
-- name: Ensure firewalld is stoped and disabled
-  systemd:
-    name: firewalld
-    state: stopped
-    enabled: no
-
 - name: Check docker config directory exists
   file:
     path: "/etc/docker/"
