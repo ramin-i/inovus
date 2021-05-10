@@ -1,4 +1,4 @@
-testrmis152_rcod:
+test-inovus:
   hosts:
     localhost:	{ansible_host: "localhost"}
     
