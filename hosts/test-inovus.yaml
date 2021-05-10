@@ -5,7 +5,7 @@ test_inovus:
 
   vars:
 ### for yandex
-    vm_name: test-inovus
+    vm_name: test-inovus2
     vm_cores: 2
     vm_mem: 4GB
     vm_boot_disk_size: 30GB
