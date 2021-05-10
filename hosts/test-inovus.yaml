@@ -14,6 +14,7 @@ test_inovus:
 ### for postgres_user
     pg_user: test
     pg_database: test
+    psql_root: zabbix
 
 ### for zabbix_install
     db_server_host: 127.0.0.1

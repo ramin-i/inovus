@@ -1,8 +1,20 @@
+- name: "Add postgres repository from file"
+  copy:
+    src: "pgdg-10-centos.repo"
+    dest: "/etc/yum.repos.d/pgdg-10-centos.repo"
+    force: yes
+    mode: 0644
+
+- name: Install postgresql to host
+  package:
+    name: postgresql
+    state: present
+
 - template:
     src:  create_user.sql.j2
     dest: /opt/create_user.sql
     mode: 0644
 
 - name: create postgres user and database
-  shell: psql -U zabbix -f /opt/create_user.sql
+  shell: psql -U {{psql_root}} -f /opt/create_user.sql
 
