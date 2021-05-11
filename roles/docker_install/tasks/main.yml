@@ -3,11 +3,6 @@
   register: docker_exists
   ignore_errors: yes
 
-- name: check if docker-compose install on host
-  shell: /usr/bin/docker-compose version
-  register: docker_compose_exists
-  ignore_errors: yes
-
 - name: get docker exists status
   debug:
     msg: "{{ docker_exists.rc }}"
@@ -33,35 +28,12 @@
     state: present
   when: docker_exists.rc != 0
 
-- name: "download docker-compose"
-  get_url:
-    url: "https://github.com/docker/compose/releases/download/{{docker_compose_version}}/docker-compose-{{docker_compose_type}}"
-    dest: "/usr/bin/docker-compose"
-    mode: 0775
-    force: no
-  when: ((docker_compose_exists.rc != 0) and (RMIS_YUM_PROXY is not defined or RMIS_YUM_PROXY == 'disabled'))
-
-- name: Check docker config directory exists
-  file:
-    path: "/etc/docker/"
-    state: directory
-    mode: 0755
-
-- name: Set daemon config params
-  copy:
-    src: "daemon.json"
-    dest: /etc/docker/daemon.json
-    mode: 0644
-  register: docker_conf
-
 - name: Ensure Docker is started and enabled at boot.
   systemd:
     name: docker
     state: started
     enabled: yes
 
-- name: Reload Docker when daemon.json changed
-  systemd:
-    name: docker
-    state: reloaded
-  when: docker_conf.changed
+- name: Init a new swarm with default parameters
+  community.docker.docker_swarm:
+    state: present

@@ -17,5 +17,5 @@ test_inovus:
     psql_root: zabbix
 
 ### for zabbix_install
-    db_server_host: 127.0.0.1
-    zabbix_server_host: 127.0.0.1
+    db_server_host: postgres-server
+    zabbix_server_host: zabbix-server
