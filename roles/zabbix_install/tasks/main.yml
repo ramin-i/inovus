@@ -1,12 +1,6 @@
-#- name: create directories
-#  file:
-#    path: "{{ amd_storage_folder }}/minio-amd-store/{{ item }}"
-#    state: directory
-#  with_items: ["data1", "data2", "data3", "data4"]
-
 - template:
     src:  docker-compose.yml.j2
     dest: /opt/docker-compose.yaml
   
 - name: run docker containers
-  shell: docker-compose -f /opt/docker-compose.yaml up -d
+  shell: docker stack deploy -c /opt/docker-compose.yaml zabbix
